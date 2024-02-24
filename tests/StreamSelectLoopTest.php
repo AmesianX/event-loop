@@ -47,10 +47,9 @@ class StreamSelectLoopTest extends AbstractLoopTest
 
         $this->loop->addReadStream($stream, $this->expectCallableNever());
 
-        $loop = $this->loop;
-        $this->loop->futureTick(function () use ($loop, $stream) {
-            $loop->futureTick(function () use ($loop, $stream) {
-                $loop->removeReadStream($stream);
+        $this->loop->futureTick(function () use ($stream) {
+            $this->loop->futureTick(function () use ($stream) {
+                $this->loop->removeReadStream($stream);
             });
         });
 
@@ -81,10 +80,9 @@ class StreamSelectLoopTest extends AbstractLoopTest
 
         $this->loop->addReadStream($stream, $this->expectCallableNever());
 
-        $loop = $this->loop;
-        $this->loop->futureTick(function () use ($loop, $stream) {
-            $loop->futureTick(function () use ($loop, $stream) {
-                $loop->removeReadStream($stream);
+        $this->loop->futureTick(function () use ($stream) {
+            $this->loop->futureTick(function () use ($stream) {
+                $this->loop->removeReadStream($stream);
             });
         });
 
@@ -113,11 +111,11 @@ class StreamSelectLoopTest extends AbstractLoopTest
 
     public function signalProvider()
     {
-        return array(
-            array('SIGUSR1'),
-            array('SIGHUP'),
-            array('SIGTERM'),
-        );
+        return [
+            ['SIGUSR1'],
+            ['SIGHUP'],
+            ['SIGTERM'],
+        ];
     }
 
     /**
@@ -133,9 +131,8 @@ class StreamSelectLoopTest extends AbstractLoopTest
         $check = $this->loop->addPeriodicTimer(0.01, function() {
             pcntl_signal_dispatch();
         });
-        $loop = $this->loop;
-        $loop->addTimer(0.1, function () use ($check, $loop) {
-            $loop->cancelTimer($check);
+        $this->loop->addTimer(0.1, function () use ($check) {
+            $this->loop->cancelTimer($check);
         });
 
         $handled = false;
@@ -165,13 +162,12 @@ class StreamSelectLoopTest extends AbstractLoopTest
         });
 
         // add stream to the loop
-        $loop = $this->loop;
         list($writeStream, $readStream) = $this->createSocketPair();
-        $loop->addReadStream($readStream, function ($stream) use ($loop) {
+        $this->loop->addReadStream($readStream, function ($stream) {
             /** @var $loop LoopInterface */
             $read = fgets($stream);
             if ($read === "end loop\n") {
-                $loop->stop();
+                $this->loop->stop();
             }
         });
         $this->loop->addTimer(0.1, function() use ($writeStream) {
