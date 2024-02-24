@@ -102,7 +102,7 @@ class StreamSelectLoopTest extends AbstractLoopTest
             $e = $e->getPrevious();
         }
 
-        $this->assertInstanceOf('RuntimeException', $e);
+        $this->assertInstanceOf(\RuntimeException::class, $e);
 
         $now = set_error_handler(function () { });
         restore_error_handler();
@@ -111,11 +111,9 @@ class StreamSelectLoopTest extends AbstractLoopTest
 
     public function signalProvider()
     {
-        return [
-            ['SIGUSR1'],
-            ['SIGHUP'],
-            ['SIGTERM'],
-        ];
+        yield ['SIGUSR1'];
+        yield ['SIGHUP'];
+        yield ['SIGTERM'];
     }
 
     /**

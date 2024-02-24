@@ -45,51 +45,49 @@ class ExtUvLoopTest extends AbstractLoopTest
         $tenMillionsIntMax = PHP_INT_MAX + 10000000;
         $tenThousandsTimesIntMax = PHP_INT_MAX * 1000;
 
-        return [
-            [
-                $oversizeInterval,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$oversizeInterval}' passed."
-            ],
-            [
-                $oneMaxValue,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$oneMaxValue}' passed.",
-            ],
-            [
-                $tenMaxValue,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$tenMaxValue}' passed.",
-            ],
-            [
-                $tenMillionsMaxValue,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$tenMillionsMaxValue}' passed.",
-            ],
-            [
-                $intMax,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$intMax}' passed.",
-            ],
-            [
-                $oneIntMax,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$oneIntMax}' passed.",
-            ],
-            [
-                $tenIntMax,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$tenIntMax}' passed.",
-            ],
-            [
-                $oneHundredIntMax,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$oneHundredIntMax}' passed.",
-            ],
-            [
-                $oneThousandIntMax,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$oneThousandIntMax}' passed.",
-            ],
-            [
-                $tenMillionsIntMax,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$tenMillionsIntMax}' passed.",
-            ],
-            [
-                $tenThousandsTimesIntMax,
-                "Interval overflow, value must be lower than '{$maxValue}', but '{$tenThousandsTimesIntMax}' passed.",
-            ],
+        yield [
+            $oversizeInterval,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$oversizeInterval}' passed."
+        ];
+        yield [
+            $oneMaxValue,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$oneMaxValue}' passed.",
+        ];
+        yield [
+            $tenMaxValue,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$tenMaxValue}' passed.",
+        ];
+        yield [
+            $tenMillionsMaxValue,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$tenMillionsMaxValue}' passed.",
+        ];
+        yield [
+            $intMax,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$intMax}' passed.",
+        ];
+        yield [
+            $oneIntMax,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$oneIntMax}' passed.",
+        ];
+        yield [
+            $tenIntMax,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$tenIntMax}' passed.",
+        ];
+        yield [
+            $oneHundredIntMax,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$oneHundredIntMax}' passed.",
+        ];
+        yield [
+            $oneThousandIntMax,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$oneThousandIntMax}' passed.",
+        ];
+        yield [
+            $tenMillionsIntMax,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$tenMillionsIntMax}' passed.",
+        ];
+        yield [
+            $tenThousandsTimesIntMax,
+            "Interval overflow, value must be lower than '{$maxValue}', but '{$tenThousandsTimesIntMax}' passed.",
         ];
     }
 }

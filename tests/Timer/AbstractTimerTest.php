@@ -3,6 +3,7 @@
 namespace React\Tests\EventLoop\Timer;
 
 use React\EventLoop\LoopInterface;
+use React\EventLoop\TimerInterface;
 use React\Tests\EventLoop\TestCase;
 
 abstract class AbstractTimerTest extends TestCase
@@ -18,7 +19,7 @@ abstract class AbstractTimerTest extends TestCase
 
         $timer = $loop->addTimer(0.001, $this->expectCallableNever());
 
-        $this->assertInstanceOf('React\EventLoop\TimerInterface', $timer);
+        $this->assertInstanceOf(TimerInterface::class, $timer);
         $this->assertFalse($timer->isPeriodic());
     }
 
@@ -45,7 +46,7 @@ abstract class AbstractTimerTest extends TestCase
 
         $periodic = $loop->addPeriodicTimer(0.1, $this->expectCallableNever());
 
-        $this->assertInstanceOf('React\EventLoop\TimerInterface', $periodic);
+        $this->assertInstanceOf(TimerInterface::class, $periodic);
         $this->assertTrue($periodic->isPeriodic());
     }
 
