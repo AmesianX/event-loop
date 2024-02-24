@@ -118,10 +118,6 @@ abstract class AbstractLoopTest extends TestCase
 
     public function testAddWriteStreamTriggersWhenSocketConnectionRefused()
     {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('Not supported on HHVM');
-        }
-
         // first verify the operating system actually refuses the connection and no firewall is in place
         // use higher timeout because Windows retires multiple times and has a noticeable delay
         // @link https://stackoverflow.com/questions/19440364/why-do-failed-attempts-of-socket-connect-take-1-sec-on-windows

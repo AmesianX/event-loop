@@ -12,7 +12,7 @@ use React\EventLoop\Timer\Timers;
  * This uses the [`stream_select()`](https://www.php.net/manual/en/function.stream-select.php)
  * function and is the only implementation that works out of the box with PHP.
  *
- * This event loop works out of the box on PHP 5.4 through PHP 8+ and HHVM.
+ * This event loop works out of the box on any PHP version.
  * This means that no installation is required and this library works on all
  * platforms and supported PHP versions.
  * Accordingly, the [`Loop` class](#loop) will use this event loop by default if
@@ -302,13 +302,10 @@ final class StreamSelectLoop implements LoopInterface
             try {
                 $ret = \stream_select($read, $write, $except, $timeout === null ? null : 0, $timeout);
                 \restore_error_handler();
-            } catch (\Throwable $e) { // @codeCoverageIgnoreStart
+            } catch (\Throwable $e) {
                 \restore_error_handler();
                 throw $e;
-            } catch (\Exception $e) {
-                \restore_error_handler();
-                throw $e;
-            } // @codeCoverageIgnoreEnd
+            }
 
             if ($except) {
                 $write = \array_merge($write, $except);

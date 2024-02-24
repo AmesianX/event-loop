@@ -42,10 +42,6 @@ class StreamSelectLoopTest extends AbstractLoopTest
 
     public function testStreamSelectReportsWarningForStreamWithFilter()
     {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('Not supported on legacy HHVM');
-        }
-
         $stream = tmpfile();
         stream_filter_append($stream, 'string.rot13');
 
@@ -80,10 +76,6 @@ class StreamSelectLoopTest extends AbstractLoopTest
 
     public function testStreamSelectThrowsWhenCustomErrorHandlerThrowsForStreamWithFilter()
     {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('Not supported on legacy HHVM');
-        }
-
         $stream = tmpfile();
         stream_filter_append($stream, 'string.rot13');
 
