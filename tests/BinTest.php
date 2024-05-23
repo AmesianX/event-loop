@@ -9,10 +9,6 @@ class BinTest extends TestCase
      */
     public function setUpBin()
     {
-        if (!defined('PHP_BINARY') || defined('HHVM_VERSION')) {
-            $this->markTestSkipped('Tests not supported on legacy PHP 5.3 or HHVM');
-        }
-
         chdir(__DIR__ . '/bin/');
     }
 

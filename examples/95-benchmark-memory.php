@@ -14,14 +14,14 @@ use React\EventLoop\TimerInterface;
 require __DIR__ . '/../vendor/autoload.php';
 
 $args = getopt('t:l:r:');
-$t  = isset($args['t']) ? (int)$args['t'] : 0;
+$t  = (int) ($args['t'] ?? 0);
 $loop = isset($args['l']) && class_exists('React\EventLoop\\' . $args['l'] . 'Loop') ? 'React\EventLoop\\' . $args['l'] . 'Loop' : Loop::get();
 
 if (!($loop instanceof LoopInterface)) {
     Loop::set(new $loop());
 }
 
-$r = isset($args['r']) ? (int)$args['r'] : 2;
+$r = (int) ($args['r'] ?? 2);
 
 $runs = 0;
 

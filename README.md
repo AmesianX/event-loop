@@ -330,7 +330,7 @@ A `stream_select()` based event loop.
 This uses the [`stream_select()`](https://www.php.net/manual/en/function.stream-select.php)
 function and is the only implementation that works out of the box with PHP.
 
-This event loop works out of the box on PHP 5.3 through PHP 8+ and HHVM.
+This event loop works out of the box on any PHP version.
 This means that no installation is required and this library works on all
 platforms and supported PHP versions.
 Accordingly, the [`Loop` class](#loop) will use this event loop by default if
@@ -373,7 +373,7 @@ This uses the [`event` PECL extension](https://pecl.php.net/package/event),
 that provides an interface to `libevent` library.
 `libevent` itself supports a number of system-specific backends (epoll, kqueue).
 
-This loop is known to work with PHP 5.4 through PHP 8+.
+This loop is known to work with PHP 7.1 through PHP 8+.
 
 #### ExtEvLoop
 
@@ -384,7 +384,7 @@ that provides an interface to `libev` library.
 `libev` itself supports a number of system-specific backends (epoll, kqueue).
 
 
-This loop is known to work with PHP 5.4 through PHP 8+.
+This loop is known to work with PHP 7.1 through PHP 8+.
 
 #### ExtUvLoop
 
@@ -394,7 +394,7 @@ This loop uses the [`uv` PECL extension](https://pecl.php.net/package/uv),
 that provides an interface to `libuv` library.
 `libuv` itself supports a number of system-specific backends (epoll, kqueue).
 
-This loop is known to work with PHP 7+.
+This loop is known to work with PHP 7.1 through PHP 8+.
 
 ### LoopInterface
 
@@ -830,8 +830,7 @@ composer require react/event-loop:^3@dev
 See also the [CHANGELOG](CHANGELOG.md) for details about version upgrades.
 
 This project aims to run on any platform and thus does not require any PHP
-extensions and supports running on legacy PHP 5.3 through current PHP 8+ and
-HHVM.
+extensions and supports running on PHP 7.1 through current PHP 8+.
 It's *highly recommended to use the latest supported PHP version* for this project.
 
 Installing any of the event loop extensions is suggested, but entirely optional.

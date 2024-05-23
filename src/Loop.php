@@ -43,15 +43,14 @@ final class Loop
             $hasRun = true;
         });
 
-        $stopped =& self::$stopped;
-        register_shutdown_function(function () use ($loop, &$hasRun, &$stopped) {
+        register_shutdown_function(function () use ($loop, &$hasRun) {
             // Don't run if we're coming from a fatal error (uncaught exception).
             $error = error_get_last();
-            if ((isset($error['type']) ? $error['type'] : 0) & (E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | E_RECOVERABLE_ERROR)) {
+            if (($error['type'] ?? 0) & (E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | E_RECOVERABLE_ERROR)) {
                 return;
             }
 
-            if (!$hasRun && !$stopped) {
+            if (!$hasRun && !self::$stopped) {
                 $loop->run();
             }
         });
@@ -83,11 +82,7 @@ final class Loop
      */
     public static function addReadStream($stream, $listener)
     {
-        // create loop instance on demand (legacy PHP < 7 doesn't like ternaries in method calls)
-        if (self::$instance === null) {
-            self::get();
-        }
-        self::$instance->addReadStream($stream, $listener);
+        (self::$instance ?? self::get())->addReadStream($stream, $listener);
     }
 
     /**
@@ -101,11 +96,7 @@ final class Loop
      */
     public static function addWriteStream($stream, $listener)
     {
-        // create loop instance on demand (legacy PHP < 7 doesn't like ternaries in method calls)
-        if (self::$instance === null) {
-            self::get();
-        }
-        self::$instance->addWriteStream($stream, $listener);
+        (self::$instance ?? self::get())->addWriteStream($stream, $listener);
     }
 
     /**
@@ -146,11 +137,7 @@ final class Loop
      */
     public static function addTimer($interval, $callback)
     {
-        // create loop instance on demand (legacy PHP < 7 doesn't like ternaries in method calls)
-        if (self::$instance === null) {
-            self::get();
-        }
-        return self::$instance->addTimer($interval, $callback);
+        return (self::$instance ?? self::get())->addTimer($interval, $callback);
     }
 
     /**
@@ -163,11 +150,7 @@ final class Loop
      */
     public static function addPeriodicTimer($interval, $callback)
     {
-        // create loop instance on demand (legacy PHP < 7 doesn't like ternaries in method calls)
-        if (self::$instance === null) {
-            self::get();
-        }
-        return self::$instance->addPeriodicTimer($interval, $callback);
+        return (self::$instance ?? self::get())->addPeriodicTimer($interval, $callback);
     }
 
     /**
@@ -193,12 +176,7 @@ final class Loop
      */
     public static function futureTick($listener)
     {
-        // create loop instance on demand (legacy PHP < 7 doesn't like ternaries in method calls)
-        if (self::$instance === null) {
-            self::get();
-        }
-
-        self::$instance->futureTick($listener);
+        (self::$instance ?? self::get())->futureTick($listener);
     }
 
     /**
@@ -211,12 +189,7 @@ final class Loop
      */
     public static function addSignal($signal, $listener)
     {
-        // create loop instance on demand (legacy PHP < 7 doesn't like ternaries in method calls)
-        if (self::$instance === null) {
-            self::get();
-        }
-
-        self::$instance->addSignal($signal, $listener);
+        (self::$instance ?? self::get())->addSignal($signal, $listener);
     }
 
     /**
@@ -242,12 +215,7 @@ final class Loop
      */
     public static function run()
     {
-        // create loop instance on demand (legacy PHP < 7 doesn't like ternaries in method calls)
-        if (self::$instance === null) {
-            self::get();
-        }
-
-        self::$instance->run();
+        (self::$instance ?? self::get())->run();
     }
 
     /**

@@ -5,7 +5,7 @@ use React\EventLoop\Loop;
 require __DIR__ . '/../vendor/autoload.php';
 
 // data can be given as first argument or defaults to "y"
-$data = (isset($argv[1]) ? $argv[1] : 'y') . "\n";
+$data = ($argv[1] ?? 'y') . "\n";
 
 // repeat data X times in order to fill around 200 KB
 $data = str_repeat($data, round(200000 / strlen($data)));
