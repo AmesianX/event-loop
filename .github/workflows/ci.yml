@@ -7,10 +7,11 @@ on:
 jobs:
   PHPUnit:
     name: PHPUnit (PHP ${{ matrix.php }})
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         php:
+          - 8.4
           - 8.3
           - 8.2
           - 8.1
@@ -24,10 +25,10 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: xdebug
+          coverage: ${{ matrix.php < 8.0 && 'xdebug' || 'pcov' }}
           ini-file: development
           ini-values: disable_functions='' # do not disable PCNTL functions on PHP < 8.1
-          extensions: sockets, pcntl, event, ev
+          extensions: sockets, pcntl, event, ${{ matrix.php < 8.0 && 'ev-1.1.5' || 'ev' }}
         env:
           fail-fast: true # fail step if any extension can not be installed
       - run: composer install
@@ -38,7 +39,7 @@ jobs:
 
   PHPUnit-Unstable:
     name: PHPUnit (Unstable PHP ${{ matrix.php }})
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     continue-on-error: true
     strategy:
       matrix:
@@ -56,7 +57,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: xdebug
+          coverage: ${{ matrix.php < 8.0 && 'xdebug' || 'pcov' }}
           ini-file: development
           extensions: sockets, pcntl
       - name: Install ext-uv
@@ -77,6 +78,7 @@ jobs:
     strategy:
       matrix:
         php:
+          - 8.4
           - 8.3
           - 8.2
           - 8.1
@@ -90,7 +92,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: xdebug
+          coverage: ${{ matrix.php < 8.0 && 'xdebug' || 'pcov' }}
           ini-file: development
           extensions: sockets,event # future: add uv-beta (installs, but can not load)
       - run: composer install
