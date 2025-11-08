@@ -117,13 +117,13 @@ final class ExtUvLoop implements LoopInterface
         $callback = function () use ($timer) {
             \call_user_func($timer->getCallback(), $timer);
 
-            if ($this->timers->contains($timer)) {
+            if ($this->timers->offsetExists($timer)) {
                 $this->cancelTimer($timer);
             }
         };
 
         $event = \uv_timer_init($this->uv);
-        $this->timers->attach($timer, $event);
+        $this->timers->offsetSet($timer, $event);
         \uv_timer_start(
             $event,
             $this->convertFloatSecondsToMilliseconds($interval),
@@ -147,7 +147,7 @@ final class ExtUvLoop implements LoopInterface
 
         $interval = $this->convertFloatSecondsToMilliseconds($interval);
         $event = \uv_timer_init($this->uv);
-        $this->timers->attach($timer, $event);
+        $this->timers->offsetSet($timer, $event);
         \uv_timer_start(
             $event,
             $interval,
@@ -165,7 +165,7 @@ final class ExtUvLoop implements LoopInterface
     {
         if (isset($this->timers[$timer])) {
             @\uv_timer_stop($this->timers[$timer]);
-            $this->timers->detach($timer);
+            $this->timers->offsetUnset($timer);
         }
     }
 
